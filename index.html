@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZ APP!!!</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .container {
+            background-color: #333333;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mainbox {
+            background-color: aliceblue;
+            height: 50vh;
+            width: 21%;
+            border: 2px solid black;
+            border-radius: 10px;
+            box-shadow: 10px 20px 30px gray;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .option {
+            display: flex;
+
+            flex-direction: column;
+            gap: 23px;
+            text-align: center;
+            justify-content: start;
+            margin: auto;
+            /* font-size: x-large; */
+            font-weight: bolder;
+            /* scale: 2; */
+            align-items: center;
+            font-size: xx-large;
+        }
+
+        .ques {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btnn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: larger;
+            font-weight: bolder;
+            margin: auto;
+            padding: 8px 30px;
+            border-radius: 10px;
+            border: 2px solid black;
+            margin-bottom: 20px;
+            background-color: #006D5B;
+            width: 50%;
+
+        }
+
+        .btnn:hover {
+            background-color: #90EE90;
+            /* padding: 16px 40px; */
+
+        }
+
+        .inner {
+            display: flex;
+            gap: 15px;
+
+            /* background-color: #333333; */
+
+            
+        }
+    </style>
+    <script>
+        // alert("hi")
+        const ques = [
+            {
+                question: "What is the capital of France?",
+                options: ["India", "America", "New Zealand", "Paris"],
+                answer: "Paris"
+            },
+            {
+                question: "What does HTML stand for?",
+                options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyperlink Text Management", "Hyper Transfer Machine Language"],
+                answer: "Hyper Text Markup Language"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Venus", "Mars", "Jupiter"],
+                answer: "Mars"
+            },
+            {
+                question: "Who invented JavaScript?",
+                options: ["Brendan Eich", "Guido van Rossum", "James Gosling", "Dennis Ritchie"],
+                answer: "Brendan Eich"
+            }
+        ];
+        let currentques = 0;
+        let correctques = 0;
+        let wrongques = 0;
+        
+        function load() {
+            let mainbox = document.getElementById("mainbox");
+            mainbox.innerHTML = ""; // Clear previous content
+            // document.getElementById("ques").innerhtml=ques[currentques].question;
+            // document.getElementById()
+            let heading = document.createElement("h1");
+            heading.innerHTML = ques[currentques].question;
+            heading.className = "ques";
+            document.getElementById("mainbox").append(heading);
+            
+            ques[currentques].options.forEach((question, index) => {
+                let option = document.createElement("div");
+                option.className = "option"
+                
+                
+                let inner = document.createElement("div");
+                inner.className = "inner"
+                inner.id="inner"
+                
+                
+                const radio = document.createElement("input");
+                radio.setAttribute("type", "radio");
+                radio.setAttribute("name", "quizOption"); // Grouping with name attribute
+                radio.setAttribute("value", question);
+                radio.setAttribute("id", "option1" + index);
+
+                // Create label
+                const label = document.createElement("label");
+                label.setAttribute("for", "option" + index); // Linking label with radio
+                // label.innerText = "Option 1";
+                label.innerText = ques[currentques].options[index];
+                
+                inner.append(radio, label);
+                option.append(inner);
+                
+                mainbox.append(option)
+            })
+            // document.getElementById("mainbox").append(option);
+            
+            
+            const btn = document.createElement("button");
+            btn.innerHTML = "Next"
+            btn.className = "btnn";
+            btn.addEventListener("click", nextQuestion);
+            document.getElementById("mainbox").append(btn);
+            
+            
+        }
+        
+        function nextQuestion() {
+            let selectedOption = document.querySelector('input[name="quizOption"]:checked');
+            if(selectedOption){
+                let ans = ques[currentques].answer;
+                let userans=selectedOption.value
+                if (userans === ans) {
+                    alert("Correct Answer !!!")
+                    correctques+=1;
+                    
+                }
+                else {
+                    alert("Wrong answer!!")
+                    wrongques+=1;
+                }
+            }
+            currentques++;
+            if (currentques < ques.length) {
+                load();
+            } else {
+                document.getElementById("mainbox").innerHTML = `<h1 class='ques'>Quiz Completed!</h1>
+    <h2 class='ques'>Correct: ${correctques} | Wrong: ${wrongques}</h2>`;
+
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            load();
+
+
+        })
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="mainbox" id="mainbox">
+            <!-- <H1 class="ques" id="ques">Q1.What is full form of HTML ??</H1>
+            <div class="option">
+                <div class="inner " id="inner1">
+                    <input type="radio" id="option1" name="options" value="1">
+                    <label for="option1">Hyper Text</label>
+                </div>
+                <div class="inner" id="inner2">
+                    <input type="radio" id="option2" name="options" value="1">
+                    <label for="option1">Hyper tan</label>
+                </div>
+                <div class="inner" id="inner3">
+                    <input type="radio" id="option3" name="options" value="1">
+                    <label for="option1">Hyper Tank</label>
+                </div>
+                <div class="inner" id="inner4">
+                    <input type="radio" id="option4" name="options" value="1">
+                    <label for="option1">Hyper tomato</label>
+                </div>
+
+            </div> -->
+            <div class="btn" id="btn">
+                <button class="btnn">Next</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
